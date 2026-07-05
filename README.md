@@ -1,6 +1,6 @@
 # Dicee
 
-A new Flutter project designed to simulate dice rolls with an intuitive user interface. Perfect for developers looking to explore Flutter development or anyone interested in creating simple, interactive applications.
+A simple dice rolling application built with Flutter to help beginners learn Flutter development. This project includes resources for getting started, such as the official Flutter documentation and codelab.
 
 ## Table of Contents
 1. [Features](#features)
@@ -18,48 +18,73 @@ A new Flutter project designed to simulate dice rolls with an intuitive user int
 13. [License](#license)
 
 ## Features
-### Dice Roll Simulation
-- **What it does:** Simulates the roll of dice with customizable options.
-- **Why it exists:** To provide a simple, interactive way to simulate dice rolls for games or educational purposes.
-- **Why it is useful:** Ideal for developers learning Flutter and anyone looking for a basic application to practice.
-
-### User-Friendly Interface
-- **What it does:** Provides an intuitive interface for users to roll dice.
-- **Why it exists:** To ensure ease of use and accessibility.
-- **Why it is useful:** Enhances user experience by making the application simple and straightforward.
+### Dicee
+- **What it does:** Allows users to roll virtual dice.
+- **Why it exists:** To provide a simple, interactive example for Flutter beginners.
+- **Why it is useful:** Helps new developers understand basic Flutter concepts like state management and UI components.
 
 ## How It Works
-Dicee uses Flutter's state management and widget system to simulate dice rolls. The application consists of a main screen with buttons to roll the dice, and a display area to show the result.
+Dicee is a straightforward Flutter application that uses the `flutter/material.dart` package for its user interface. The core functionality involves rolling dice when a button is pressed, which updates the displayed dice image.
 
-```plaintext
-+-------------------+
-|                   |
-|   Roll Dice       |
-|                   |
-+---------+---------+
-        |
-        v
-+---------+---------+
-|                   |
-|    Dice Result    |
-|                   |
-+-------------------+
+```dart
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 1;
+
+  void rollDice() {
+    setState(() {
+      leftDiceNumber = Random().nextInt(6) + 1;
+      rightDiceNumber = Random().nextInt(6) + 1;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.red,
+      appBar: AppBar(
+        title: Text('Dicee'),
+      ),
+      body: Center(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Image.asset('images/dice$leftDiceNumber.png'),
+            ),
+            Expanded(
+              child: Image.asset('images/dice$rightDiceNumber.png'),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: rollDice,
+        tooltip: 'Roll Dice',
+        child: Icon(Icons.refresh),
+      ),
+    );
+  }
+}
 ```
 
 ## Technology Stack
-
 | Technology | Purpose |
 |------------|---------|
-| Flutter      | The UI software development kit used to build natively compiled applications for mobile, web, and desktop from a single codebase. |
-| Dart         | The programming language used by Flutter. |
-| CMake        | A cross-platform, open-source build system generator. |
+| Flutter | The UI software development kit created by Google. |
+| Dart | The programming language used for building Flutter applications. |
+| State Management | Manages the state of the application, allowing dynamic updates to the UI. |
 
 ## Requirements
-- **Runtime:** Flutter SDK (version 2.5.0 or later)
-- **Package Manager:** pub (comes with Flutter SDK)
+- Flutter SDK (version 2.0 or higher)
+- Android Studio or Xcode (for platform-specific development)
 
 ## Installation
-To install the project, follow these steps:
+To install and run this project, follow these steps:
 
 1. Clone the repository:
    ```sh
@@ -71,12 +96,12 @@ To install the project, follow these steps:
    cd Dicee_Flutter
    ```
 
-3. Get dependencies:
+3. Install dependencies:
    ```sh
    flutter pub get
    ```
 
-4. Run the application:
+4. Run the application on an emulator or physical device:
    ```sh
    flutter run
    ```
@@ -87,57 +112,70 @@ No additional configuration is required for this project.
 ## Quick Start
 To quickly start using Dicee, follow these steps:
 
-1. Clone the repository and navigate to the project directory.
-2. Run `flutter pub get` to install dependencies.
-3. Execute `flutter run` to start the application.
+1. Clone the repository.
+2. Install dependencies.
+3. Run the application.
+
+```sh
+git clone https://github.com/PartORG/Dicee_Flutter.git
+cd Dicee_Flutter
+flutter pub get
+flutter run
+```
 
 ## Usage
-To roll a dice, tap on the "Roll Dice" button in the main screen. The result will be displayed below the button.
+To use Dicee, simply press the "Roll Dice" button to roll the virtual dice and see the result on the screen.
 
 ```dart
-// Example of rolling a dice
-int rollDice() {
-  return Random().nextInt(6) + 1;
-}
+floatingActionButton: FloatingActionButton(
+  onPressed: rollDice,
+  tooltip: 'Roll Dice',
+  child: Icon(Icons.refresh),
+),
 ```
 
 ## Project Structure
-
-```plaintext
+```
 Dicee_Flutter/
 ├── android/
 │   ├── app/
 │   │   └── src/
 │   │       └── main/
 │   │           └── kotlin/
-│   │               └── com/example/dicee/
-│   │                   └── MainActivity.kt
-│   └── ...
+│   │               └── com/
+│   │                   └── example/
+│   │                       └── dicee/
+│   │                           └── MainActivity.kt
 ├── ios/
 │   ├── Runner.xcodeproj/
-│   │   └── project.pbxproj
-│   └── ...
+│   └── Runner/
+│       └── AppDelegate.swift
 ├── lib/
 │   └── main.dart
 ├── test/
 │   └── widget_test.dart
 └── web/
-    └── index.html
+    ├── index.html
+    └── manifest.json
 ```
 
 ## Development
-This project uses Flutter's state management and widget system to build the user interface. Developers can explore the `lib/main.dart` file for more details on how the application is structured.
+This project is a starting point for Flutter development. Feel free to modify and extend it as needed.
 
 ## Testing
-The project includes basic unit tests in the `test/widget_test.dart` file. To run the tests, execute:
+Unit tests are included in the `test` directory.
 
-```sh
-flutter test
+```dart
+void main() {
+  test('adds one plus one', () {
+    expect(1 + 1, 2);
+  });
+}
 ```
 
 ## Limitations
-- The application does not support multiple dice rolls simultaneously.
-- No advanced features like custom dice faces are included.
+- This project is a simple example and does not include advanced features.
+- No external dependencies are used for simplicity.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for details.
